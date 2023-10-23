@@ -1,0 +1,85 @@
+<head>
+    <title>Eisverkauf - Gelato...</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+        "use strict";
+        function fErloesrechner() {
+        // Quellcode
+
+        var vProduktionsmenge;
+        var vAusgabe;
+        var vKV;
+        var vKostGesamt;
+        var vKF;
+        var vStueckPreis;
+        var vE, vG;
+        var vBEP;
+        var vGewinnschwelle;
+        var vMenge=0;
+    
+        vProduktionsmenge = parseFloat(document.getElementById("idProduktionsmenge").value);
+        vStueckPreis = parseFloat(document.getElementById("idPreis").value);
+        
+        vKV=parseFloat(document.getElementById("idKV").value);
+        vKF=parseFloat(document.getElementById("idKF").value);
+
+        vAusgabe = "";
+        vAusgabe = vAusgabe + "<table border=1>";
+        vAusgabe = vAusgabe + "<tr><th>Menge</th><th>Kosten K(x) = k<sub>F</sub> + k<sub>v</sub> * x </th><th>Erlöse E (x) = p * × </td><th>Gewinn G(x) = E(x) - K(x)</th><th>Bemerkung</th></tr>";
+// Schleife mit der Bedingung, dass die Startmenge kleiner sein muss als die Produktionsmenge
+for (vMenge = 0; vMenge <= vProduktionsmenge; vMenge += 1000) {
+    // Gesamtkosten errechnen sich aus der abgesetzten Menge * Variable Kosten + Fixe Kosten
+    vKostGesamt = vKF + vKV * vMenge;
+    
+    // Erlösrechnung: verkaufte Menge * Preis pro Stück
+    vE = vMenge * vStueckPreis;
+    
+    // Gewinn ist Erlös - Gesamtkosten (Variable und Fixe Kosten)
+    vG = vE - vKostGesamt;
+    
+    // Überprüfung, ob der Gewinn kleiner 0 ist (Verlustzone) und ggf. rot markieren
+    var bemerkung = (vG < 0) ? 'Verlustzone' : 'Gewinn';
+    
+    // Ausgabe der Ergebnisse in der Tabelle
+    vAusgabe += "<tr><td>" + vMenge + "</td><td>" + vKostGesamt + "</td><td>" + vE + "</td><td>" + vG + "</td><td>" + bemerkung + "</td></tr>";
+}
+
+// Berechne die Gewinnschwellenmenge in Stück: BEP = Fixkosten / (Stückpreis - Variable Kosten)
+vBEP = vKF / (vStueckPreis - vKV);
+
+// Runde die Gewinnschwellenmenge auf die nächste Ganzzahl auf
+vBEP = Math.ceil(vBEP);
+
+
+// Berechne die Gewinnschwelle in Euro: Gewinnschwelle = BEP * Stückpreis
+vGewinnschwelle = vBEP * vStueckPreis;
+
+// Ausgabe der Break-Even-Point Stückmenge aufgerundet und des Break-Even-Points in Euro
+vAusgabe += "<tr><td colspan='4'><strong>Break-Even-Point (BEP): " + vBEP + "</strong></td><td><strong>" + vGewinnschwelle.toFixed(2) + "</strong></td></tr>";
+
+vAusgabe += "</table></br>";
+
+// Ausgabe der Variable vAusgabe im Div-Element
+document.getElementById("idAusgabe").innerHTML = vAusgabe;
+
+    }
+
+    </script></head>
+
+ 
+
+
+<body>
+<img src="eis.PNG" width="340px" height="260px">
+
+
+    <h1>Eisverkauf-Gelato</h1>
+Kosten-Variabel(k, pro Eiskugel): <input id="idKV" value="0.50" size="6">
+    Kosten-Fix: <input id="idKF" value="500.00" size="6"><br/><br/>
+    Verkaufsmenge(x): <input id="idProduktionsmenge" value="1000" size="6">
+    Stückpreis(p): <input id="idPreis" value="1.50" size="6">
+    <button onclick="fErloesrechner();">Kostentabelle!</button><br><br>
+    <div id="idAusgabe"></div>
+
+
+</body></html>
+
