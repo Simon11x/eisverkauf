@@ -26,7 +26,7 @@
         vAusgabe = vAusgabe + "<table border=1>";
         vAusgabe = vAusgabe + "<tr><th>Menge</th><th>Kosten K(x) = k<sub>F</sub> + k<sub>v</sub> * x </th><th>Erlöse E (x) = p * × </td><th>Gewinn G(x) = E(x) - K(x)</th><th>Bemerkung</th></tr>";
 // Schleife mit der Bedingung, dass die Startmenge kleiner sein muss als die Produktionsmenge
-for (vMenge = 0; vMenge <= vProduktionsmenge; vMenge += 1000) {
+for (vMenge = 0; vMenge <= vProduktionsmenge; vMenge += 100) {
     // Gesamtkosten errechnen sich aus der abgesetzten Menge * Variable Kosten + Fixe Kosten
     vKostGesamt = vKF + vKV * vMenge;
     
